@@ -13,7 +13,7 @@ temp
 yarn-error.log
 .build
 Pods/
-
+.envrc
 
 **/.pnp.*
 **/.yarn/*
