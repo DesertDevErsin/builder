@@ -1,0 +1,23 @@
+{
+  "name": "integrating-models-node-express",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuilderIO/builder.git"
+  },
+  "author": "Ersin Akinci <ersin@builder.io> (http://ersinakinci.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BuilderIO/builder/issues"
+  },
+  "homepage": "https://github.com/BuilderIO/builder/examples/integrating-models/node-express",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1"
+  }
+}
