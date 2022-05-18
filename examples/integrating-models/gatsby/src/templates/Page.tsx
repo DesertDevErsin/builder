@@ -2,7 +2,7 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import { BuilderComponent } from '@builder.io/react';
 
-function PageTemplate({ data }) {
+function PageTemplate({ data }: { data: any }) {
   const models = data?.allBuilderModels;
   const page = models.page[0]?.content;
 
