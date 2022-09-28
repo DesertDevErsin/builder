@@ -472,18 +472,20 @@ export class BuilderBlock extends React.Component<
 
       const styleSplit = styleStr.split(';');
       for (const pair of styleSplit) {
-        const stylePieces = pair.split(':');
-        if (!stylePieces.length) {
-          return;
+        if (pair.length > 0) {
+          const stylePieces = pair.split(':');
+          if (!stylePieces.length) {
+            return;
+          }
+
+          let [key, value] = stylePieces;
+
+          if (stylePieces.length > 2) {
+            value = stylePieces.slice(1).join(':');
+          }
+
+          options.style[kebabCaseToCamelCase(key)] = value;
         }
-
-        let [key, value] = stylePieces;
-
-        if (stylePieces.length > 2) {
-          value = stylePieces.slice(1).join(':');
-        }
-
-        options.style[kebabCaseToCamelCase(key)] = value;
       }
     }
 
@@ -516,7 +518,7 @@ export class BuilderBlock extends React.Component<
     // tslint:disable-next-line:comment-format
     ///REACT15ONLY finalOptions.className = finalOptions.class
 
-    if (Builder.isEditing) {
+    if (Builder.isEditing || Builder.isServer) {
       // TODO: removed bc JS can add styles inline too?
       (finalOptions as any)['builder-inline-styles'] = !(options.attr && options.attr.style)
         ? ''
@@ -547,6 +549,8 @@ export class BuilderBlock extends React.Component<
     // )
 
     const children = block.children || finalOptions.children || [];
+
+    console.log('finalOptions', finalOptions);
 
     // TODO: test it out
     return (
@@ -636,7 +640,13 @@ export class BuilderBlock extends React.Component<
 
     if (block.repeat && block.repeat.collection) {
       const collectionPath = block.repeat.collection;
-      const collectionName = last((collectionPath || '').trim().split('(')[0].trim().split('.'));
+      const collectionName = last(
+        (collectionPath || '')
+          .trim()
+          .split('(')[0]
+          .trim()
+          .split('.')
+      );
       const itemName = block.repeat.itemName || (collectionName ? collectionName + 'Item' : 'item');
       const array = this.stringToFunction(collectionPath)(
         state.state,
